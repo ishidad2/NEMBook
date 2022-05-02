@@ -6,7 +6,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./public:/work
+      - ./:/work
       - ./logs:/var/log/nginx
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./docker/nginx/localhost.crt:/etc/certs/localhost.crt
