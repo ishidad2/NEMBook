@@ -14,16 +14,107 @@
 	<meta name="twitter:image" content="https://ishidad2.github.io/NEMBook/images/logo.png">
   <link rel="icon" href="favicon.ico">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DVVDEXDB91"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DVVDEXDB91');
+  </script>
   <title>NEMBook</title>
 </head>
 <body>
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-light bg-light mb-3">
     <div class="container-fluid">
       <div class="navbar-brand">
-        <img src="images/logo.svg" alt="" width="150" height="100">
+        <img src="images/logo.svg" alt="" width="100" height="60">
       </div>
     </div>
   </nav>
+  <div class="container">
+    <!-- row -->
+    <div class="row">
+      <!-- アカウント -->
+      <div class="col-sm-4">
+        <h2>アカウント</h2>
+        <dl>
+          <dt>講座名</dt><dd><span id="account_address"></span></dd>
+          <dt>残高</dt><dd><span id="account_balance"></span></dd>
+          <dt>時価総額</dt><dd><span id="polo_price"></span></dd>
+          <dt>重要度</dt><dd><span id="account_importance"></span></dd>
+        </dl>
+        <h2>取引所</h2>
+          <dt><a href="https://poloniex.com/exchange#BTC_XEM">Poloniex</a></dt><dd><span id="polo_lastprice"></span></dd>
+          <dt><a href="https://zaif.jp/trade_xem_jpy">Zaif</a></dt><dd><span id="zaif_lastprice"></span></dd>
+          <dt><a href="https://www.coingecko.com/ja/%E3%82%B3%E3%82%A4%E3%83%B3/%E3%83%8D%E3%83%A0">CoinGecko</a></dt><dd><span id="coingecko_lastprice"></span></dd>
+      </div>
+      <!-- アカウント end -->
+      <!-- ハーベスト -->
+      <div class="col-sm-4">
+        <h2>ハーベスト</h2>
+        <dl>
+          <dt>重要度</dt><dd><span id="account_importance2"></span></dd>
+          <dt>直近のハーベスト</dt>
+          <dd><span id="last_harvest"></span></dd>
+        </dl>
+        <table id="harvests">
+          <thead><tr><th>日時</th><th>金額</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <dl>
+          <dd><a id="harvests_more" href="javascript:void(0)" >さらに読み込む</a></dd>
+        </dl>
+      </div>
+      <!-- ハーベスト end -->
+      <!-- 入出金履歴 -->
+      <div class="col-sm-4">
+        <h2>入出金履歴</h2>
+        <table id="transfers">
+          <thead><tr><th>日時</th><th>区分</th><th>金額</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <dl>
+          <dt>ここまでの入金総額：</dt><dd><span id="sum_income"></span></dd>
+          <dt>ここまでの出金総額：</dt><dd><span id="sum_outcome"></span></dd>
+          <dd><a id="transfers_more" href="javascript:void(0)" >さらに読み込む</a></dd>
+          <dd><a id="transfers_nembex" href="https://explorer.nemtool.com/#/s_tx?hash=" >explorerで確認</a></dd>
+        </dl>
+      </div>
+      <!-- 入出金履歴 end -->
+      <!-- リンク -->
+      <div class="faucet">
+        <h2>リンク</h2>
+        <dl>
+          <strong>NEM版</strong>
+          <dd><a id="xemtax" href="">NEMTax</a></dd>
+          <dd><a id="xemmessage" href="">NEMMessage</a></dd>
+          <dd><a id="nemgallery" href="">NEMGallery</a></dd>
+          <strong>NEM版 ツール</strong>
+          <dd><a href="https://nemkit.oe-jpy.com/">NemKit</a></dd>
+          <dd><a id="openapostille" target="_blank" href="">OpenApostille</a></dd>
+          <strong>Symbol版</strong>
+          <dd><a href="https://xembook.github.io/xembook/index.html">XEMBook</dd>
+          <dd><a href="https://xembook.github.io/xembook/xemtax.html">XEMTax</a></dd>
+          <dd><a href="https://xembook.github.io/xembook/xemmessage.html">XEMMessage</a></dd>
+        </dl>
+        <h2>開発者への寄付</h2>
+        <dl>
+          <dd>XEM：NACETR47STWTNJSLWY3JMH45BLCS5UL3G5HLMWR7</dd>
+          <dd>XYM：NDBSQQFMPJION5C6S5MTZHTXZF7YLX7UZHFLBOA</dd>
+          <dd>開発者：<a href="https://twitter.com/ishidad2" >Twitter</a></dd>
+        </dl>
+        <dl>
+          <dt>収支報告</dt>
+          <dd><a href="/nis1?address=NACETR-47STWT-NJSLWY-3JMH45-BLCS5U-L3G5HL-MWR7" >NEMBookで確認</a></dd>
+        </dl>
+      </div>
+      <!-- リンク end -->
+    </div>
+    <!-- row end -->
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>

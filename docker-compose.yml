@@ -13,3 +13,9 @@ services:
       - ./docker/nginx/localhost-key.key:/etc/certs/localhost-key.key
     environment:
       - TZ=Asia/Tokyo
+  node:
+    image: node:15
+    tty: true
+    volumes:
+      - ./script:/src
+    working_dir: "/src"

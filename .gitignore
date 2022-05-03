@@ -1,3 +1,5 @@
 docker/nginx/*
 !docker/nginx/default.conf
 logs/*.log
+script/node_modules
+script/nodelist.js

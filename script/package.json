@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "axios": "^0.27.2"
+  },
+  "type": "module",
+  "name": "src",
+  "version": "1.0.0",
+  "main": "getNodes.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
