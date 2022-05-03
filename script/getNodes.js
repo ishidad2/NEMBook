@@ -34,7 +34,7 @@ axios.get(_peer_url)
       console.log('Version', node.nisInfo.version);
       console.log(node.nisInfo.version === nisInfo_version);
       if(node.nisInfo.version === nisInfo_version){
-        hosts.push(node.endpoint.host);
+        hosts.push(protcol + node.endpoint.host  + port);
       }
     })
     .catch(function (error) {
@@ -45,7 +45,7 @@ axios.get(_peer_url)
       // 取得成功・失敗の処理後に共通で実行
     });
   };
-  config_write(protcol + hosts + port);
+  config_write(hosts);
   console.log(hosts);
 }
 
