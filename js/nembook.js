@@ -1,4 +1,8 @@
 $(async function(){
+  axios.defaults.baseURL = 'https://localhost';
+  axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+  axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+  
   const node = NODES[Math.floor(Math.random() * NODES.length)];
   let address = "";
   let lc = "JPY";
@@ -219,8 +223,11 @@ $(async function(){
 		address = item["address"];
 	}
 
-  axios.get("https://api.zaif.jp/api/1/last_price/xem_jpy")
+  axios.get("https://api.zaif.jp/api/1/last_price/xem_jpy", {
+    adapter: axiosJsonpAdapter,
+  })
 	.then(function(res){
+    console.log(res);
 		$("#zaif_lastprice").text( res.last_price + " JPY/XEM");
 	})
   .catch(function(err){
@@ -229,7 +236,7 @@ $(async function(){
 
   axios.get("https://api.coingecko.com/api/v3/simple/price?ids=nem&vs_currencies=jpy")
 	.then(function(res) {
-		$("#coingecko_lastprice").text( res.nem.jpy + " JPY/XEM");
+		$("#coingecko_lastprice").text( res.data.nem.jpy + " JPY/XEM");
 	})
   .catch(function(err){
     console.log(err);
