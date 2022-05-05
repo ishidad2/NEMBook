@@ -2,13 +2,12 @@ $(async function(){
 
   const node = NODES[Math.floor(Math.random() * NODES.length)];
   let address = "";
-  let lc = "JPY";
-  let last_jpy;
 	let last_transfer_id;
 	let first_harvests_id;
 	let sum_income = 0;
 	let sum_outcome = 0;
 	let is_last_harvest = true;
+  let harvets_flg = false;
 
   const getAccount = (address) => {
     return new Promise((resolve, reject) => {
@@ -28,7 +27,7 @@ $(async function(){
 		}
     axios.get(node + '/account/transfers/all?address=' + address + index_id)
     .then(function (response){
-      parseTransfers(result,mcnt);
+      parseTransfers(response.data,mcnt);
     })
     .catch(function(err){
       console.log(err);
@@ -42,8 +41,9 @@ $(async function(){
 
   // === parser=== 
   const parseTransfers = (result,mcnt) => {
-		transfers_node = result.node
-		var dataArray = result.transfers.data;
+		var dataArray = result.data;
+    //配列がゼロなら更に読み込むを非表示
+    if(dataArray.length === 0) $('#transfers_more').hide();
 		let cnt = 0;
 		dataArray.some(function(val){
 			var meta = val.meta;
@@ -122,27 +122,25 @@ $(async function(){
 		if(first_harvests_id){
 			index_id = "&id=" + first_harvests_id;
 		}
-		$.ajax({
-			url: proxy_harvests,
-			type: 'GET',
-			data:{
-				params: index_id,
-				target_address: address,
-				node: harvets_node 
-			}
-		}).then(function(result){
-			parseHarvests(result,mcnt);
-		});
+		axios.get(node + "/account/harvests?address=" + address + index_id
+		).then(function(result){
+			parseHarvests(result.data, mcnt);
+		})
+    .catch((err)=>{
+      console.log(err);
+    });
 	};
 
   const parseHarvests = (result,mcnt) => {
 		if (account_meta.remoteStatus != "ACTIVE"){
-			if(harvets_node === "" ) $("#harvests tbody").append( "<tr><td>[status]</td><td>INACTIVE</td></tr>" );
+			if(!harvets_flg) $("#harvests tbody").append( "<tr><td>[status]</td><td>INACTIVE</td></tr>" );
+      harvets_flg = true;
 		}else{
-			var dataArray = result.harvests.data;
+			var dataArray = result.data;
+      //配列がゼロなら更に読み込むを非表示
+      if(dataArray.length === 0) $('#harvests_more').hide();
 			var cnt = 0;
 			dataArray.some(function(val){
-				console.log(val);
 				if(is_last_harvest){
 					$("#last_harvest").text("[ " + dispTimeStamp(val.timeStamp) + " ] " + dispAmount(val.totalFee) + "XEM");
 					is_last_harvest = false;
@@ -165,21 +163,19 @@ $(async function(){
 				}
 			});
 		}
-		harvets_node = result.node
 	};
 
   // === parser end === 
 
   const dispTimeStamp = (timeStamp) => {
-
 		var NEM_EPOCH = Date.UTC(2015, 2, 29, 0, 6, 25, 0);
 		var d = new Date(timeStamp * 1000 + NEM_EPOCH);
 		var strDate =
-			date_format( d.getMonth() + 1 )
-			+ '/' + date_format( d.getDate() )
+			date_format(d.getMonth() + 1)
+			+ '/' + date_format(d.getDate())
 			+ '/' + d.getFullYear()
-			+ ' ' + date_format( d.getHours() )
-			+ ':' + date_format( d.getMinutes() ) ;
+			+ ' ' + date_format(d.getHours())
+			+ ':' + date_format(d.getMinutes());
 		return 	strDate;
 	}
 
@@ -200,6 +196,10 @@ $(async function(){
 		return l + "." + r;
 	}
 
+  const date_format = (num) => {
+		return ( num < 10 ) ? '0' + num  : num;
+	};
+
 	const  paddingright = (val,char,n) =>{
 		for(; val.length < n; val= char + val);
 		return val;
@@ -207,7 +207,6 @@ $(async function(){
 
   // === main ===
   if (1 < document.location.search.length) {
-
 		var query = document.location.search.substring(1);
 		var prms = query.split('&');
 		var item = new Object();
@@ -219,17 +218,6 @@ $(async function(){
 		}
 		address = item["address"];
 	}
-
-  axios.get("https://nem.daisan.dev/api/last_price")
-	.then(function(res){
-    console.log(res);
-		$("#zaif_lastprice").text( res.data.zaif.last_price + " JPY/XEM");
-		$("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");
-
-	})
-  .catch(function(err){
-    console.log(err);
-  });
 
   if( !address ){
 		var proaddress = prompt('NEMのアドレスを入力してください',address);
@@ -251,5 +239,52 @@ $(async function(){
     alert("アカウント情報が見つかりません。\n入力したアドレスを確認してください。");
     return;
   }
+
+  getHarvests(10);
+	getTransfers(10);
+
+  var account = result.account;
+  account_meta    = result.meta;
+  account_balance = account.balance;
+  account_balance = 	account_balance.toString();
+  if(account_balance != "0"){
+    account_balance = dispAmount(account_balance);
+  }
+  var account_importance = account.importance * 100000000;
+  account_importance = Math.round( account_importance );
+  account_importance /= 10000;
+
+  $("#full_address").val(address);
+  $("#account_balance").text(account_balance + "XEM");
+  $("#account_importance").text(account_importance);
+  $("#account_importance2").text(account_importance);
+  $("#xemtax").attr("href", "nemtax.html?address=" + address);
+  $("#xemmessage").attr("href", "nemmessage.html?address=" + address);
+  $("#nemgallery").attr("href", "nemgallery.html?address=" + address);
+  $("#openapostille").attr("href", "https://www.openapostille.net/owner/" + address);
+  $("#transfers_nembex").attr("href", "https://explorer.nemtool.com/#/s_account?account=" + address);
+  $("#account_address").text(
+    account.address.substring(0,6)
+    + "-" +account.address.substring(6,12)
+    + "-" + account.address.substring(12,18)
+    +"..."
+  );
+
+  // 取引所価格
+  axios.get("https://nem.daisan.dev/api/last_price")
+	.then(function(res){
+		$("#zaif_lastprice").text( res.data.zaif.last_price + " JPY/XEM");
+		$("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");
+
+    var total_price = account.balance / 1000000 * res.data.zaif.last_price;
+    $("#total_price").text(total_price + "JPY (" + res.data.zaif.last_price + "JPY/XEM rate)");
+
+	})
+  .catch(function(err){
+    console.log(err);
+  });
+
+  $('#harvests_more' ).click(function(){ getHarvests(25);return false;});
+	$('#transfers_more').click(function(){getTransfers(25);return false;});
 
 });
