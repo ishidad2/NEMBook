@@ -264,7 +264,6 @@ $(async function(){
   $("#transfers_nembex"  ).attr("href", "http://explorer.nemtool.com/#/s_account?account="  + account.address);
   $("#nembook").attr("href", "index.html?address=" + address);
   $("#nembook_logo").attr("href", "index.html?address=" + address);
-  $("#nemtax").attr("href", "nemtax.html?address=" + address);
   $("#nemmessage").attr("href", "nemmessage.html?address=" + address);
   $("#nemgallery").attr("href", "nemgallery.html?address=" + address);
 
