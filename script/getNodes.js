@@ -5,6 +5,7 @@ const _peer_url = "http://chain.nem.ninja/api3/nodes";
 const nisInfo_version = "0.6.100";
 const protcol = "https://";
 const port = ":7891";
+let nount = 1;
 
 axios.get(_peer_url)
 .then((response) => {
@@ -27,6 +28,7 @@ axios.get(_peer_url)
  async function createNodeArray(nodes){
   let hosts = [];
   for(let i in nodes){
+    console.log(" === " + nount + "===");
     const node = nodes[i];
     await axios.get(protcol + node.endpoint.host + port +"/node/info",{timeout: 1200})
     .then((response)=>{
@@ -44,6 +46,7 @@ axios.get(_peer_url)
     .then(function () {
       // 取得成功・失敗の処理後に共通で実行
     });
+    nount++;
   };
   config_write(hosts);
   console.log(hosts);

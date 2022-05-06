@@ -13,6 +13,6 @@ const NODES = [
   "https://nis1.dusan.gq:7891",
   "https://nem-main-1.next-web-technology.com:7891",
   "https://6.dusan.gq:7891",
-  "https://6.dusan.gq:7891",
+  "https://2.dusan.gq:7891",
   "https://nis1.dusan.gq:7891"
 ].filter(node => !NG_NODES.includes(node));;
