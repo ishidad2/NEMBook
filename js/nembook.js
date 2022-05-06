@@ -17,8 +17,7 @@ $(async function(){
           resolve(response.data)
          })
         .catch(error => reject(error))
-    }) 
-
+    })
   }
   const getTransfers = (mcnt) => {
     var index_id = "";
