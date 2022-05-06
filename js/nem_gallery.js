@@ -23,11 +23,6 @@ $(async function(){
 		}
 	}
 
-  const paddingright = (val,char,n) => {
-		for(; val.length < n; val= char + val);
-		return val;
-	}
-
 	const createImgTag = (src,target,comment) => {
 		var photo = '<div class="col-md-4 col-sm-6 co-xs-12 gal-item">';
 		photo += '<div class="box">';
@@ -83,6 +78,7 @@ $(async function(){
     address = prompt('NEMアドレスを入力してください',address);
   }
   address = address.replace( /-/g , "" ).toUpperCase();
+	$("#nembook").attr("href", "index.html?address=" + address);
 
   sendAjax(ACCOUNT_MOSAIC_OWNED + address).then(function(result){
 
