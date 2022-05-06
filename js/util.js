@@ -16,14 +16,13 @@ const getAccount = (address) => {
 
 const dispTimeStamp = (timeStamp) => {
   var NEM_EPOCH = Date.UTC(2015, 2, 29, 0, 6, 25, 0);
-  var d = new Date(timeStamp * 1000 + NEM_EPOCH);
-  var strDate =
-    date_format(d.getMonth() + 1)
-    + '/' + date_format(d.getDate())
-    + '/' + d.getFullYear()
-    + ' ' + date_format(d.getHours())
-    + ':' + date_format(d.getMinutes());
-  return 	strDate;
+		var d = new Date(timeStamp * 1000 + NEM_EPOCH);
+		var strDate = d.getFullYear()%100
+			+ "-" + date_format( d.getMonth() + 1 )
+			+ '-' + date_format( d.getDate() )
+			+ ' ' + date_format( d.getHours() )
+			+ ':' + date_format( d.getMinutes() ) ;
+		return 	strDate;
 }
 
 const dispAmount = (amount) => {

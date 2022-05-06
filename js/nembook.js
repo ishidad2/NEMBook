@@ -24,7 +24,20 @@ $(async function(){
       // always executed
     })
   }
-
+	
+	const getHarvests = (mcnt) => {
+		index_id = "";
+		if(first_harvests_id){
+			index_id = "&id=" + first_harvests_id;
+		}
+		axios.get(node + "/account/harvests?address=" + address + index_id
+		).then(function(result){
+			parseHarvests(result.data, mcnt);
+		})
+    .catch((err)=>{
+      console.log(err);
+    });
+	};
   // === parser=== 
   const parseTransfers = (result,mcnt) => {
 		var dataArray = result.data;
@@ -101,21 +114,6 @@ $(async function(){
 			}
 		});
 	}
-
-  const getHarvests = (mcnt) => {
-
-		index_id = "";
-		if(first_harvests_id){
-			index_id = "&id=" + first_harvests_id;
-		}
-		axios.get(node + "/account/harvests?address=" + address + index_id
-		).then(function(result){
-			parseHarvests(result.data, mcnt);
-		})
-    .catch((err)=>{
-      console.log(err);
-    });
-	};
 
   const parseHarvests = (result,mcnt) => {
 		if (account_meta.remoteStatus != "ACTIVE"){
