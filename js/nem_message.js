@@ -23,10 +23,6 @@ $(async function(){
 
 	//Txのパース
 	const parseTransfers = (result) => {
-		console.log("=== parseTransfers ===");
-		console.log(result);
-		console.log("=== parseTransfers end===");
-
 		var search_word = $("#search_word").val();
 		var dataArray = result.data;
     //配列がゼロなら更に読み込むを非表示
@@ -60,7 +56,7 @@ $(async function(){
 
 					var o = tran_message.payload;
 					if(tran_message.type == '2'){
-						plain_text = "[暗号化されています]";
+						plain_text = "[EncryptedMessage]";
 
 					}else if (o && o.length > 2 && o[0] === 'f' && o[1] === 'e') {
 						plain_text = "HEX:" + o;
@@ -176,11 +172,7 @@ $(async function(){
     return;
   }
 
-  console.log(result.account);
-  console.log("========getAccount===========");
-  console.log(result);
-  console.log("========getAccount end===========");
-  var account = result.account;
+  let account = result.account;
   account_balance = account.balance;
   account_balance = 	account_balance.toString();
   account_publicKey = account.publicKey;
@@ -190,7 +182,7 @@ $(async function(){
   }else{
     account_balance = "0.000000";
   }
-  var account_importance = account.importance * 100000000;
+  let account_importance = account.importance * 100000000;
   account_importance = Math.round( account_importance );
   account_importance /= 10000;
 
@@ -209,7 +201,7 @@ $(async function(){
 		$("#zaif_lastprice").text( res.data.zaif.last_price + " JPY/XEM");
 		$("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");
 
-    var total_price = account.balance / 1000000 * res.data.zaif.last_price;
+    const total_price = account.balance / 1000000 * res.data.zaif.last_price;
     $("#total_price").text(total_price + "JPY (" + res.data.zaif.last_price + "JPY/XEM rate)");
     getTransfers(10);
 	})
