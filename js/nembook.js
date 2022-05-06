@@ -1,6 +1,5 @@
 $(async function(){
 
-  const node = NODES[Math.floor(Math.random() * NODES.length)];
   let address = "";
 	let last_transfer_id;
 	let first_harvests_id;
@@ -9,16 +8,6 @@ $(async function(){
 	let is_last_harvest = true;
   let harvets_flg = false;
 
-  const getAccount = (address) => {
-    return new Promise((resolve, reject) => {
-      axios
-        .get(node + '/account/get?address=' + address)
-        .then(response => {
-          resolve(response.data)
-         })
-        .catch(error => reject(error))
-    })
-  }
   const getTransfers = (mcnt) => {
     var index_id = "";
 		if(last_transfer_id){
@@ -35,8 +24,6 @@ $(async function(){
       // always executed
     })
   }
-
-  // === api end ===
 
   // === parser=== 
   const parseTransfers = (result,mcnt) => {
@@ -220,8 +207,9 @@ $(async function(){
   $("#account_importance").text(account_importance);
   $("#account_importance2").text(account_importance);
   $("#nembook").attr("href", "index.html?address=" + address);
-  $("#xemtax").attr("href", "nemtax.html?address=" + address);
-  $("#xemmessage").attr("href", "nemmessage.html?address=" + address);
+  $("#nembook_logo").attr("href", "index.html?address=" + address);
+  $("#nemtax").attr("href", "nemtax.html?address=" + address);
+  $("#nemmessage").attr("href", "nemmessage.html?address=" + address);
   $("#nemgallery").attr("href", "nemgallery.html?address=" + address);
   $("#openapostille").attr("href", "https://www.openapostille.net/owner/" + address);
   $("#transfers_nembex").attr("href", "https://explorer.nemtool.com/#/s_account?account=" + address);

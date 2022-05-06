@@ -1,3 +1,19 @@
+const node = NODES[Math.floor(Math.random() * NODES.length)];
+
+// === api ===
+const getAccount = (address) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(node + '/account/get?address=' + address)
+      .then(response => {
+        resolve(response.data)
+       })
+      .catch(error => reject(error))
+  })
+}
+
+// === api end ===
+
 const dispTimeStamp = (timeStamp) => {
   var NEM_EPOCH = Date.UTC(2015, 2, 29, 0, 6, 25, 0);
   var d = new Date(timeStamp * 1000 + NEM_EPOCH);
@@ -35,3 +51,37 @@ const  paddingright = (val,char,n) =>{
   for(; val.length < n; val= char + val);
   return val;
 }
+
+const escape_html = (string) => {
+  if(typeof string !== 'string') {
+    return string;
+  }
+  return string.replace(/[&'`"<>]/g, function(match) { //'
+    return {
+      '&': '&amp;',
+      "'": '&#x27;',
+      '`': '&#x60;',
+      '"': '&quot;',
+      '<': '&lt;',
+      '>': '&gt;',
+    }[match]
+  });
+}
+
+const replacer = ( str, word , size ) => {
+
+  var SearchString = '(' + word.replace( ',', '|' ) + ')';
+  var RegularExp = new RegExp( SearchString, "g" );
+  var ReplaceString = "<span class='right' style='color:red; font-size:" + size + "px; background-color: yellow;'>$1</span>";
+  var ResString = str.replace( RegularExp , ReplaceString );
+  return ResString;
+}
+
+const hex2a = (hexx) => {
+  var hex = hexx.toString();
+  var str = '';
+  for (var i = 0; i < hex.length; i += 2) {
+      str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+  }
+  return str;
+};

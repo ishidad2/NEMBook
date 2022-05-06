@@ -30,7 +30,7 @@
   <nav class="navbar navbar-light bg-light mb-3">
     <div class="container-fluid">
       <div class="navbar-brand">
-        <a href="" id="nembook"><img src="images/logo.svg" alt="" width="100" height="60"></a>NEMMessage
+        <a href="" id="nembook_logo"><img src="images/logo.svg" alt="" width="100" height="60"></a>NEMMessage
       </div>
     </div>
   </nav>
@@ -38,12 +38,15 @@
     <div class="main">
 			<div class="row" >
 				<h2>抽出条件</h2>
-				<form class="form-inline">
-					<div class="form-group">
-						<input id="search_word" type="text" name="name" class="form-control">
-					</div>
-					<button id="search_btn"	class="btn btn-default">再検索</button>
-				</form>
+
+        <form class="row g-2">
+          <div class="col-auto">
+            <input type="text" class="form-control" id="search_word" name="name">
+          </div>
+          <div class="col-auto">
+            <button id="search_btn" class="btn btn-primary mb-3">再検索</button>
+          </div>
+        </form>
 			</div>
 			<div class="row">
 				<h2>入出金履歴</h2>
@@ -70,17 +73,15 @@
 		<div class="row">
 			<h2>リンク</h2>
 			<dl>
-				<dd><a id="xembook" href="">XEMBook for NEM(復刻版)</a></dd>
-			</dl>
+        <dd><a id="nembook" href="">NEMBook</a></dd>
+        <dd><a id="nemtax" href="">NEMTax</a></dd>
+        <dd><a id="nemgallery" href="">NEMGallery</a></dd>
+      </dl>
 			<h2>開発者への寄付</h2>
 			<dl>
         <dd>XEM：NACETR47STWTNJSLWY3JMH45BLCS5UL3G5HLMWR7</dd>
         <dd>XYM：NDBSQQFMPJION5C6S5MTZHTXZF7YLX7UZHFLBOA</dd>
         <dd>開発者：<a href="https://twitter.com/ishidad2" >Twitter</a></dd>
-      </dl>
-			<dl>
-        <dt>収支報告</dt>
-        <dd><a href="?address=NACETR-47STWT-NJSLWY-3JMH45-BLCS5U-L3G5HL-MWR7" >NEMBookで確認</a></dd>
       </dl>
 		</div>
   </div>
@@ -90,6 +91,6 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="js/nem_config.js"></script>
   <script src="js/util.js"></script>
-  <script src="js/nembook.js"></script>
+  <script src="js/nem_message.js"></script>
 </body>
 </html>

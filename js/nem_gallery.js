@@ -79,6 +79,7 @@ $(async function(){
   }
   address = address.replace( /-/g , "" ).toUpperCase();
 	$("#nembook").attr("href", "index.html?address=" + address);
+	$("#nembook_logo").attr("href", "index.html?address=" + address);
 
   sendAjax(ACCOUNT_MOSAIC_OWNED + address).then(function(result){
 
