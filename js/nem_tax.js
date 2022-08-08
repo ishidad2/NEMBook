@@ -233,6 +233,8 @@ $(async function(){
 	}
 	address = address.replace( /-/g , "" ).toUpperCase();
 	address = address.replace(/\s+/g, "");
+	_address = address
+
 
   const result = await getAccount(address);
   if(result.account === undefined){
@@ -266,8 +268,10 @@ $(async function(){
   $("#nembook_logo").attr("href", "index.html?address=" + address);
   $("#nemmessage").attr("href", "nemmessage.html?address=" + address);
   $("#nemgallery").attr("href", "nemgallery.html?address=" + address);
+	
+	const token = readToken();
 
-  axios.get("https://nem.daisan.dev/api/v1/xem_jpy")
+  axios.get("https://nem.daisan.dev/api/v1/xem_jpy", {params: {address: address, token: token, type: "nem"}})
 	.then(function(res){
     zaif_ticker = res.data;
 		getHarvests(10);
@@ -325,3 +329,24 @@ const harvestsDownload = () => {
 }
 
 // === CSV end===
+var _address = "";
+function setToken(){
+	var prop = window.prompt('tokenを入力してください','');
+	if(prop !== "" && prop !== null){
+		saveToken(prop);
+	}
+}
+
+function readToken(){
+	const token = window.localStorage.getItem(_address)
+	$("#token").html(token);
+	$(".set_token_btn").prop("disabled", false);
+	return token;
+}
+
+function saveToken(token){
+	window.localStorage.setItem(_address, token);
+	$("#token").html(token);
+	$(".set_token_btn").prop("disabled", true);
+	location.reload();
+}

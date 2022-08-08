@@ -1,7 +1,7 @@
 const EXPLORER = "https://explorer.nemtool.com";
 
 const NG_NODES = [
-
+  "https://nis1.harvestasya.com:7891"
 ];
 
 //http://chain.nem.ninja/api3/nodes
