@@ -2,7 +2,7 @@ import axios from "axios";
 import fs from 'fs';
 
 const _peer_url = "http://chain.nem.ninja/api3/nodes";
-const nisInfo_version = "0.6.100";
+const nisInfo_version = "0.6.101";
 const protcol = "https://";
 const port = ":7891";
 let nount = 1;
