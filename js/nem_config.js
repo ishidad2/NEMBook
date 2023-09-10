@@ -6,14 +6,11 @@ const NG_NODES = [
 
 //http://chain.nem.ninja/api3/nodes
 const NODES = [
-  "https://00b21efd.xem.stir-hosyu.com:7891",
-  "https://symbolic.from.nagoya:7891",
-  "https://super-nem.love:7891",
-  "https://nis1.dusan.gq:7891",
-  "https://nem-main-1.next-web-technology.com:7891",
-  "https://6.dusan.gq:7891",
-  "https://2.dusan.gq:7891",
-  "https://nis1.p-runner.net:7891",
-  "https://1.dusan.gq:7891",
-  "https://nis1.harvestasya.com:7891",
+  "https://nem03.symbol-node.com:7891",
+  "https://nem01a.symbol-node.com:7891",
+  "https://nem06.symbol-node.com:7891",
+  "https://nem02.symbol-node.com:7891",
+  "https://nem04.symbol-node.com:7891",
+  "https://symbology.from.nagoya:7891",
+  "https://super-nem.love:7891"
 ].filter(node => !NG_NODES.includes(node));
