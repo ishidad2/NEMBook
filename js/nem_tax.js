@@ -66,7 +66,7 @@ $(async function(){
 					"<td class='text-right'>" + avgJPY + "</td>" +
 				"</tr>" );
 				csv_harvest_line += dispTimeStamp(val.timeStamp) +","+totalFeeCsv+","+totalFeeJPY+","+avgJPY+"\r\n";
-
+				csv_harvest_line_cp += dispTimeStamp(val.timeStamp, "/", true) +","+"BONUS,NEMBook,XEM,"+totalFeeCsv+","+avgJPY+",JPY,0,JPY"+"\r\n";
 			}
 			first_harvests_id = val.id;
 		});
@@ -96,6 +96,8 @@ $(async function(){
 			let tran_fee = tran.fee;
 			let tran_type = "";
 			let tran_type_csv = "";
+			let tran_amount_csv = 0;
+			let tran_amount_jpy_csv = 0;
 			let outgoing_fee = 0;
 
 			if(tran.type == 4100){
@@ -156,7 +158,7 @@ $(async function(){
 					}
 				}else if(address == tran.recipient){
 					sum_income += tran_amount;
-					if(tran.signer == "d96366cdd47325e816ff86039a6477ef42772a455023ccddae4a0bd5d27b8d23"){
+					if(tran.signer == "d96366cdd47325e816ff86039a6477ef42772a455023ccddae4a0bd5d27b8d23" || tran.signer == "4b1451054a825b2501b877ef1eb26e6c1009c5e935851a679f75321123a742db"){
 						tran_type = "<font color='green'>SN入金</font>";
 						tran_type_csv = "SN入金";
 					}else{
@@ -190,6 +192,15 @@ $(async function(){
 						"<td class='text-right'>" + outgoing_fee + "</td>" +
 					"</tr>" );
 					csv_tran_line += dispTimeStamp(tran.timeStamp) +","+tran_type_csv+","+tran_amount_csv+","+tran_amount_jpy_csv+","+avg_jpy+","+ outgoing_fee+"\r\n";
+					csv_tran_line_cp += dispTimeStamp(tran.timeStamp, "/", true) + ","
+						+ tran_type_csv + ","
+						+ "NEMBook" + ","
+						+ "XEM" + ","
+						+ tran_amount_csv + ","
+						+ avg_jpy + ","
+						+ "JPY" + ","
+						+ outgoing_fee + ","
+						+ "JPY" + "\r\n";
 				}
 			}
 		});
@@ -268,7 +279,7 @@ $(async function(){
   $("#nembook_logo").attr("href", "index.html?address=" + address);
   $("#nemmessage").attr("href", "nemmessage.html?address=" + address);
   $("#nemgallery").attr("href", "nemgallery.html?address=" + address);
-	
+
 	const token = readToken();
 
   axios.get("https://nem.daisan.dev/api/v1/xem_jpy", {params: {address: address, token: token, type: "nem"}})
@@ -300,7 +311,9 @@ $(async function(){
 
 })
 let csv_tran_line = "";
+let csv_tran_line_cp = "";
 let csv_harvest_line = "";
+let csv_harvest_line_cp = "";
 // === CSV ===
 const tranDownload = () => {
   let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
@@ -315,6 +328,19 @@ const tranDownload = () => {
   }
 }
 
+const tranDownload_cryptact = () => {
+  let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+  let content = '日時,種類,ソース,主軸通貨,取引量,価格（主軸通貨1枚あたりの価格）,決済通貨,手数料,手数料通貨,コメント\r\n' + csv_tran_line_cp;
+  let blob = new Blob([ bom, content ], { "type" : "text/csv" });
+  if (window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(blob, "custom_history.csv");
+      // msSaveOrOpenBlobの場合はファイルを保存せずに開ける
+      window.navigator.msSaveOrOpenBlob(blob, "custom_history.csv");
+  } else {
+      document.getElementById("t_2download").href = window.URL.createObjectURL(blob);
+  }
+}
+
 const harvestsDownload = () => {
   let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
   let content = '日時,XEM,円換算値,円平均\r\n' + csv_harvest_line;
@@ -325,6 +351,19 @@ const harvestsDownload = () => {
       window.navigator.msSaveOrOpenBlob(blob, "harvests.csv");
   } else {
       document.getElementById("hdownload").href = window.URL.createObjectURL(blob);
+  }
+}
+const harvestsDownload_cryptact = () => {
+	console.log(csv_harvest_line_cp);
+  let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+  let content = '日時,種類,ソース,主軸通貨,取引量,価格（主軸通貨1枚あたりの価格）,決済通貨,手数料,手数料通貨,コメント\r\n' + csv_harvest_line_cp;
+  let blob = new Blob([ bom, content ], { "type" : "text/csv" });
+  if (window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(blob, "custom_harvests.csv");
+      // msSaveOrOpenBlobの場合はファイルを保存せずに開ける
+      window.navigator.msSaveOrOpenBlob(blob, "custom_harvests.csv");
+  } else {
+      document.getElementById("h_2download").href = window.URL.createObjectURL(blob);
   }
 }
 

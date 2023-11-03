@@ -14,13 +14,19 @@ const getAccount = (address) => {
 
 // === api end ===
 
-const dispTimeStamp = (timeStamp) => {
+const dispTimeStamp = (timeStamp, delimiter="-", f=false) => {
   var NEM_EPOCH = Date.UTC(2015, 2, 29, 0, 6, 25, 0);
 		var d = new Date(timeStamp * 1000 + NEM_EPOCH);
-		var strDate = d.getFullYear()%100
-			+ "-" + date_format( d.getMonth() + 1 )
-			+ '-' + date_format( d.getDate() )
-			+ ' ' + date_format( d.getHours() )
+    let d_f = d.getFullYear()%100;
+    let space = "";
+    if(f){
+      d_f = d.getFullYear();
+      space = " ";
+    }
+		var strDate = d_f
+			+ delimiter + date_format( d.getMonth() + 1 )
+			+ delimiter + date_format( d.getDate() )
+      + space + date_format( d.getHours() )
 			+ ':' + date_format( d.getMinutes() ) ;
 		return 	strDate;
 }
