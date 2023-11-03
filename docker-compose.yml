@@ -3,19 +3,10 @@ services:
   web:
     image: nginx:1.17-alpine
     ports:
-      - 80:80
-      - 443:443
+      - 3000:3000
     volumes:
       - ./:/work
       - ./logs:/var/log/nginx
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./docker/nginx/localhost.crt:/etc/certs/localhost.crt
-      - ./docker/nginx/localhost-key.key:/etc/certs/localhost-key.key
     environment:
       - TZ=Asia/Tokyo
-  node:
-    image: node:15
-    tty: true
-    volumes:
-      - ./script:/src
-    working_dir: "/src"
