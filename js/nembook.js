@@ -61,7 +61,7 @@ $(async function(){
 
 			}
 
-			if (tran.type == 257 || tran.type == 8193 ){
+			if (tran.type == 257 || tran.type == 8193 || tran.type == 2049){
 
 				//モザイクが存在した場合
 				var has_mosaic = false;
@@ -85,7 +85,12 @@ $(async function(){
 					}
 				}
 
-				if(address != tran.recipient){
+				if(tran.type == 2049){
+					sum_outcome = tran.fee;
+					tran_type = "<font color='gray'>link fee</font>";
+					tran_amount = dispAmount(tran.fee);
+					tran_amount = "- " + tran_amount;
+				}else if(address != tran.recipient){
 					sum_outcome += tran_amount + tran.fee;
 					tran_type = "<font color='red'>out</font>";
 					tran_amount = dispAmount(tran_amount + tran.fee);

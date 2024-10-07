@@ -137,7 +137,6 @@ $(async function(){
 				let is_appendable = false;
 
 				if(tran.type == 2049){
-					console.log(tran.timeStamp);
 					sum_outcome = tran_fee;
 					tran_type = "<font color='gray'>手数料</font>";
 					tran_type_csv = "手数料";

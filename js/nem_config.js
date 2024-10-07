@@ -1,4 +1,5 @@
-const EXPLORER = "https://explorer.nemtool.com";
+// const EXPLORER = "https://explorer.nemtool.com";
+const EXPLORER = "https://nem-explorer.vercel.app";
 
 const NG_NODES = [
 ];
