@@ -106,7 +106,7 @@ $(async function(){
 				tran = tran.otherTrans;
 			}
 
-			if (tran.type == 257 || tran.type == 8193 ){
+			if (tran.type == 257 || tran.type == 8193 || tran.type == 2049){
 
 				//モザイクが存在した場合
 				let has_mosaic = false;
@@ -135,8 +135,28 @@ $(async function(){
 				}
 
 				let is_appendable = false;
-				if(address != tran.recipient && tran.signer == account_publicKey){
 
+				if(tran.type == 2049){
+					console.log(tran.timeStamp);
+					sum_outcome = tran_fee;
+					tran_type = "<font color='gray'>手数料</font>";
+					tran_type_csv = "手数料";
+					tran_amount_csv = (tran_fee)/1000000;
+					tran_amount = dispAmount(tran_fee);
+					tran_amount = "- " + tran_amount;
+					is_appendable = true;
+					if(getDate(tran.timeStamp) in zaif_ticker){
+						avg_jpy = zaif_ticker[getDate(tran.timeStamp)];
+						tran_amount_jpy = Math.floor( avg_jpy * tran_fee / 100) / 10000;
+						tran_amount_jpy_csv = tran_amount_jpy;
+						outgoing_fee = Math.floor( avg_jpy * ( tran_fee) / 100) / 10000;
+						tran_amount_jpy = "- " + tran_amount_jpy.toString();
+					}else{
+						avg_jpy = "NO JPY DATA";
+						tran_amount_jpy = "NO JPY DATA";
+						tran_amount_jpy_csv = tran_amount_jpy;
+					}
+				}else	if(address != tran.recipient && tran.signer == account_publicKey){
 					sum_outcome += tran_amount + tran_fee;
 					tran_type = "<font color='red'>出金</font>";
 					tran_type_csv = "出金";
