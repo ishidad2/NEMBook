@@ -301,7 +301,7 @@ $(async function(){
 
 	const token = readToken();
 
-  axios.get("https://nem.daisan.dev/api/v1/xem_jpy", {params: {address: address, token: token, type: "nem"}})
+  axios.get("/xem_jpy.json")
 	.then(function(res){
     zaif_ticker = res.data;
 		getHarvests(10);
@@ -312,7 +312,7 @@ $(async function(){
   });
 
   // 取引所価格
-  axios.get("https://nem.daisan.dev/api/last_price")
+  axios.get("/last_price.json")
 	.then(function(res){
 		$("#zaif_lastprice").text( res.data.zaif.last_price + " JPY/XEM");
 		$("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");

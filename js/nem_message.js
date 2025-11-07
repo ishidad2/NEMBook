@@ -196,7 +196,7 @@ $(async function(){
   $("#nemgallery").attr("href", "nemgallery.html?address=" + address);
 
   // 取引所価格
-  axios.get("https://nem.daisan.dev/api/last_price")
+  axios.get("/last_price.json")
 	.then(function(res){
 		$("#zaif_lastprice").text( res.data.zaif.last_price + " JPY/XEM");
 		$("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");
