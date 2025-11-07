@@ -301,7 +301,7 @@ $(async function(){
 
 	const token = readToken();
 
-  axios.get("/xem_jpy.json")
+  axios.get("./xem_jpy.json")
 	.then(function(res){
     zaif_ticker = res.data;
 		getHarvests(10);
@@ -312,7 +312,7 @@ $(async function(){
   });
 
   // 取引所価格
-  axios.get("/last_price.json")
+  axios.get("./last_price.json")
 	.then(function(res){
 		$("#zaif_lastprice").text( res.data.zaif.last_price + " JPY/XEM");
 		$("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");
