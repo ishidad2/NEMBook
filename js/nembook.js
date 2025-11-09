@@ -224,11 +224,11 @@ $(async function(){
   );
 
   // 取引所価格
-  axios.get("./last_price.json")
+  axios.get("https://script.google.com/macros/s/AKfycbyVMx0Kigt18116L4vOV0q4T86hvgnpkAKyrtm8vQYyduG49jbHVHiT-jc3xzH8Jzm_/exec")
 	.then(function(res){
 		$("#zaif_lastprice").text( res.data.zaif.last_price + " JPY/XEM");
-		$("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");
-
+		// $("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");
+		console.log(res.data);
     var total_price = account.balance / 1000000 * res.data.zaif.last_price;
     $("#total_price").text(total_price + "JPY (" + res.data.zaif.last_price + "JPY/XEM rate)");
 

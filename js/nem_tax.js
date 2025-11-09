@@ -301,7 +301,7 @@ $(async function(){
 
 	const token = readToken();
 
-  axios.get("./xem_jpy.json")
+  axios.get("https://script.google.com/macros/s/AKfycby02m-qU9vaiqA2yemhhNOIZiWts0xUVbkA-t2YT6gX9aB05ts9i3uOt9G_iHLiGtPEpg/exec")
 	.then(function(res){
     zaif_ticker = res.data;
 		getHarvests(10);
@@ -312,10 +312,10 @@ $(async function(){
   });
 
   // 取引所価格
-  axios.get("./last_price.json")
+  axios.get("https://script.google.com/macros/s/AKfycbyVMx0Kigt18116L4vOV0q4T86hvgnpkAKyrtm8vQYyduG49jbHVHiT-jc3xzH8Jzm_/exec")
 	.then(function(res){
 		$("#zaif_lastprice").text( res.data.zaif.last_price + " JPY/XEM");
-		$("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");
+		// $("#coingecko_lastprice").text( res.data.coingecko.last_price + " JPY/XEM");
 
     var total_price = account.balance / 1000000 * res.data.zaif.last_price;
     $("#total_price").text(total_price + "JPY (" + res.data.zaif.last_price + "JPY/XEM rate)");
